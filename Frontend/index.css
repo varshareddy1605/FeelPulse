@@ -1,0 +1,150 @@
+body {
+    background: linear-gradient(-45deg, #1F1C2C, #928DAB);
+    background-size: 400% 400%;
+    animation: bgAnimation 6s ease infinite;
+    color: #fff;
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    background-size: cover;
+    background-position: center; 
+    background-attachment: fixed;
+}
+
+@keyframes bgAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    width: 800px;
+    max-width: 450px;
+    padding:20px 20px;
+    border-radius: 15px;
+    background: rgba(146, 141, 171, 0.9);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+    position: flex;
+    min-height: 350px;
+    height: auto;
+    padding: 25px;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, #1F1C2C, #928DAB, #1F1C2C, #928DAB);
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: smoothBorder 6s linear infinite;
+}
+@keyframes smoothBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+h1 {
+    font-size: 30px;
+    background: linear-gradient(90deg, #1F1C2C, #7065a7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding:18px 50px;
+    border: none; 
+    border-radius: 8px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    outline: none;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #928DAB;
+    box-shadow: 0 0 10px rgba(146, 141, 171, 0.7);
+}
+button {
+    width: 40%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(90deg, #1F1C2C, #928DAB);
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(87, 87, 87, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px rgba(87, 87, 87, 0.8);
+    background: linear-gradient(90deg, #928DAB, #1F1C2C);
+}
+
+.output {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(146, 141, 171, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    display: none;
+}
+.output.show {
+    display: block; 
+}
+.label{
+    font-weight: bold;
+    font-size: 20px;
+    padding-right:40vh;
+    text-align: justify;
+}
+#sentimentText{
+    padding-inline-end: 130px;
+}
+#summaryText{
+    padding-inline-end: 130px;
+}
+#hi{
+    position: fixed;
+    display: block;
+    background-attachment: fixed; 
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 22px;
+    }
+    input[type="text"], button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

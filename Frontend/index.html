@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FeelPulse</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.79/build/spline-viewer.js"></script>
+<spline-viewer id="hi" url="https://prod.spline.design/nSIcamo7rZ6UCbiN/scene.splinecode"></spline-viewer>
+  <div class="container">
+    <h1>FeelPulse</h1>
+    
+    <!-- Text Analysis Input -->
+    <input type="text" id="textInput" placeholder="Enter text to analyze sentiment..." />
+    <button onclick="analyzeText()">Analyze Text</button>
+    
+    <!-- URL Analysis Input -->
+    <input type="text" id="urlInput" placeholder="Paste a URL (e.g. https://www.amazon.in/...)" />
+    <button onclick="analyzeURL()">Analyze URL</button>
+
+    <div class="output" id="results" style="display: none;">
+      <div>
+        <span class="label">Summary:</span>
+        <span id="summaryText"></span>
+      </div>
+      <div style="margin-top: 10px;">
+        <span class="label">Sentiment:</span>
+        <span id="sentimentText"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const analyzeTextBtn = document.getElementById("analyzeText");
+    const analyzeUrlBtn = document.getElementById("analyzeUrl");
+    const outputDiv = document.querySelector(".output");
+    const container = document.querySelector(".container");
+
+    function showOutput() {
+        outputDiv.classList.add("show");
+          // Allow container to grow dynamically
+        container.style.height = container.scrollHeight + outputDiv.scrollHeight + "px";
+    }
+
+    analyzeTextBtn.addEventListener("click", showOutput);
+    analyzeUrlBtn.addEventListener("click", showOutput);
+});
+    async function analyzeText() {
+      document.querySelector('.container').classList.add('flipped');
+      document.getElementById("results").style.display = "block";
+      const textValue = document.getElementById('textInput').value;
+      if (!textValue) {
+        alert('Please enter text.');
+        return;
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/analyze_text", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: textValue }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('summaryText').textContent = "N/A"; // No summary for text input
+        document.getElementById('sentimentText').textContent = data.sentiment;
+
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function analyzeURL() {
+      document.querySelector('.container').classList.add('flipped');
+      document.getElementById("results").style.display = "block";
+      const urlValue = document.getElementById('urlInput').value;
+      if (!urlValue) {
+        alert('Please enter a URL.');
+        return;
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/analyze_url", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: urlValue }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('summaryText').textContent = data.summary;
+        document.getElementById('sentimentText').textContent = data.sentiment;
+
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>
